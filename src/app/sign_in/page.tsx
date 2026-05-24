@@ -6,10 +6,29 @@ import Link from "next/link"
 
 export default function LoginPage() {
 
-    const [email, seEmail] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    function handleLogin() {}
+    async function handleLogin() {
+        
+        const response = await fetch(
+            '/api/sign_in',
+            {
+                method: 'POST',
+                
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                
+                body: JSON.stringify({ email, password }),
+            }
+        )
+        const data = await response.json()
+        console.log("status:", response.status)
+        console.log("ok:", response.ok)
+        console.log("data:", data)
+        
+    }
 
     return (
         <div className='min-h-screen flex flex-col items-center justify-center gap-4 bg-cover'
@@ -23,16 +42,16 @@ export default function LoginPage() {
 
         >
 
-        <h1 className='text-4xl font-bold hover:text-blue-500 cursor-default'> Login </h1>
+        <h1 className='text-4xl font-bold hover:text-blue-500 cursor-default'> Sign in </h1>
 
-        <Input placeholder='Enter your email' type='email'/>
+        <Input value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)}} placeholder='Enter your email' type='email'/>
 
-        <Input type='password' placeholder='Enter your password' />
+        <Input value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}} type='password' placeholder='Enter your password' />
 
         <p> New here? <Link className='text-blue-300 underline' href={"/sign_up"}> Sign up </Link> </p>
 
 
-        <Button> Sign in </Button>
+        <Button onClick={handleLogin} > Sign in </Button>
             
         </div>
     )}

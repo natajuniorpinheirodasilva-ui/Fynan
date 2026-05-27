@@ -1,8 +1,8 @@
 import React from 'react'
 
 type Props = {
-    children: React.ReactNode
-    onClick: React.MouseEventHandler<HTMLButtonElement>
+    children: React.ReactNode;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({ children, onClick }: Props) => {

@@ -4,8 +4,8 @@ import React from 'react'
 type Props = {
   type: string;
   placeholder: string;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Input = ({ type, placeholder, value, onChange }: Props) => {

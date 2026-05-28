@@ -11,13 +11,30 @@ export default function SignUpPage() {
     const [repeatPassword, setRepeatPassword] = useState('')
     const [error, setError] = useState('')    
     const [animateError, setAnimateError] = useState(false)
+    const [emailError, setEmailError] = useState('')
+    const [animateEmailError, setAnimateEmailError] = useState(false)
 
     async function handleSignUp() {
         
-        if (password != repeatPassword) {
+        if (email.length === 0) {
             
+            setEmailError("Invalid email address")
 
-            setError("Password are Different.")
+            setAnimateEmailError(true)
+
+            setTimeout(() => {
+                setAnimateEmailError(false)
+            }, 1000);
+
+        }
+
+        else {setEmailError('')}
+
+        if (password.length === 0 || repeatPassword.length === 0) {}
+
+        if (password != repeatPassword) {
+
+            setError("Passwords are Different.")
 
             setAnimateError(true)
 
@@ -71,7 +88,19 @@ export default function SignUpPage() {
 
         <p> Already have an account? <Link className='text-blue-300 underline drop-shadow-[0_0_10px_#60a5fa] ' href={"/sign_in"}> Sign in </Link> </p>
 
+        {emailError && 
+        
         <p className={`
+        transition-all duration-300
+        ${animateEmailError
+        ? "text-blue-400 drop-shadow-[0_0_10px_#60a5fa]"
+        : "text-white drop-shadow-[0_0_10px_white] "}
+        `} >
+            {emailError}
+        </p>
+        }
+
+        {error && <p className={`
         transition-all duration-300
         ${animateError
         ? "text-blue-400 drop-shadow-[0_0_10px_#60a5fa]"
@@ -80,7 +109,8 @@ export default function SignUpPage() {
 
             {error}
 
-        </p>
+        </p> }
+
 
         <Button onClick={handleSignUp}> Sign up </Button>
 

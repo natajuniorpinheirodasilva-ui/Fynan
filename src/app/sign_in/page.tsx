@@ -48,7 +48,7 @@ export default function LoginPage() {
 
         <Input value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}} type='password' placeholder='Enter your password' />
 
-        <p> New here? <Link className=' drop-shadow-[0_0_10px_#60a5fa] text-blue-300 underline' href={"/sign_up"}> Sign up </Link> </p>
+        <p> New here? <Link className='drop-shadow-[0_0_10px_#60a5fa] text-blue-300 underline' href={"/sign_up"}> Sign up </Link> </p>
 
         <Button onClick={handleSignIn} > Sign in </Button>
             

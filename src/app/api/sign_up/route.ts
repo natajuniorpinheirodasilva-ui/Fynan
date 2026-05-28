@@ -1,3 +1,5 @@
-export async function POST(){
-    return Response.json(console.log("Funcionou a API aqui!"))
+export async function POST(request: Request){
+    const body = await request.json()
+    const {email, password, repeatPassword} = body
+    return Response.json({ email, password })
 }

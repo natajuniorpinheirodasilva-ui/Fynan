@@ -10,61 +10,40 @@ export default function SignUpPage() {
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [error, setError] = useState('')    
-    const [animateError, setAnimateError] = useState(false)
     const [emailError, setEmailError] = useState('')
-    const [animateEmailError, setAnimateEmailError] = useState(false)
 
     async function handleSignUp() {
         
-        if (email.length === 0) {
-            
-            setEmailError("Invalid email address")
+        const emailErr = email.length === 0 ? 'Invalid email address' : ''
+        const passwordErr = password.length === 0 ?'Invalid password' : ''
+        const repeatErr = password != repeatPassword ? 'Passwords do not match' : ''
 
-            setAnimateEmailError(true)
+        setRepeatPassword(repeatErr)
+        setEmailError(emailErr)
+        setError(passwordErr)
 
-            setTimeout(() => {
-                setAnimateEmailError(false)
-            }, 1000);
 
-        }
-
-        else {setEmailError('')}
-
-        if (password.length === 0 || repeatPassword.length === 0) {}
-
-        if (password != repeatPassword) {
-
-            setError("Passwords are Different.")
-
-            setAnimateError(true)
-
-            setTimeout(() => {
-                setAnimateError(false)
-            }, 1000)
+        if (emailErr != '' || passwordErr != '' || password != repeatPassword) return
         
-        }
-        
-        else{
-            
-            setError("")
-            const response = await fetch(
-                '/api/sign_up',
-                {
-                    method: 'POST',
+
+        const response = await fetch(
+            '/api/sign_up',
+            {
+                method: 'POST',
                     
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                     
-                    body: JSON.stringify({ email, password, repeatPassword }),
-                }
-            )
-            const data = await response.json()
-            console.log("status:", response.status)
-            console.log("ok:", response.ok)
-            console.log("data:", data)
+                body: JSON.stringify({ email, password, repeatPassword }),
+            }
+        )
+        const data = await response.json()
+        console.log("status:", response.status)
+        console.log("ok:", response.ok)
+        console.log("data:", data)
             
-    }}
+    }
 
     return (
         <div className='min-h-screen flex flex-col items-center justify-center gap-4 bg-cover'
@@ -90,22 +69,12 @@ export default function SignUpPage() {
 
         {emailError && 
         
-        <p className={`
-        transition-all duration-300
-        ${animateEmailError
-        ? "text-blue-400 drop-shadow-[0_0_10px_#60a5fa]"
-        : "text-white drop-shadow-[0_0_10px_white] "}
-        `} >
+        <p className='text-white drop-shadow-[0_0_10px_white] '>
             {emailError}
         </p>
         }
 
-        {error && <p className={`
-        transition-all duration-300
-        ${animateError
-        ? "text-blue-400 drop-shadow-[0_0_10px_#60a5fa]"
-        : "text-white drop-shadow-[0_0_10px_white] "}
-        `} >
+        {error && <p className='text-white drop-shadow-[0_0_10px_white] ' >
 
             {error}
 

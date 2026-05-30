@@ -1,4 +1,3 @@
-import { HtmlContext } from 'next/dist/server/route-modules/pages/vendored/contexts/entrypoints';
 import React from 'react'
 
 type Props = {

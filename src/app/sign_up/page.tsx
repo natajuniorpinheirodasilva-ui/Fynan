@@ -9,7 +9,8 @@ export default function SignUpPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
-    const [error, setError] = useState('')    
+    const [error, setError] = useState('')
+    const [repeatError, setRepeatError] = useState('')
     const [emailError, setEmailError] = useState('')
 
     async function handleSignUp() {
@@ -18,7 +19,7 @@ export default function SignUpPage() {
         const passwordErr = password.length === 0 ?'Invalid password' : ''
         const repeatErr = password != repeatPassword ? 'Passwords do not match' : ''
 
-        setRepeatPassword(repeatErr)
+        setRepeatError(repeatErr)
         setEmailError(emailErr)
         setError(passwordErr)
 
@@ -67,18 +68,11 @@ export default function SignUpPage() {
 
         <p> Already have an account? <Link className='text-blue-300 underline drop-shadow-[0_0_10px_#60a5fa] ' href={"/sign_in"}> Sign in </Link> </p>
 
-        {emailError && 
-        
-        <p className='text-white drop-shadow-[0_0_10px_white] '>
-            {emailError}
-        </p>
-        }
+        {repeatError && <p className='text-white drop-shadow-[0_0_10px_white] '> {repeatError} </p>}
 
-        {error && <p className='text-white drop-shadow-[0_0_10px_white] ' >
+        {emailError && <p className='text-white drop-shadow-[0_0_10px_white]' > {emailError} </p> }
 
-            {error}
-
-        </p> }
+        {error && <p className='text-white drop-shadow-[0_0_10px_white] '> {error} </p> }
 
 
         <Button onClick={handleSignUp}> Sign up </Button>

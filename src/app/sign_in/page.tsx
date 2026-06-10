@@ -3,7 +3,6 @@ import { useState } from "react"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
 import Link from "next/link"
-import { error } from "console"
 
 export default function LoginPage() {
 

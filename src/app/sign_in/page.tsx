@@ -3,6 +3,7 @@ import { useState } from "react"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
 
@@ -10,6 +11,8 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('')
+
+    const router = useRouter()
 
     async function handleSignIn() {
         
@@ -37,6 +40,8 @@ export default function LoginPage() {
         console.log("status:", response.status)
         console.log("ok:", response.ok)
         console.log("data:", data)
+        
+        if (response.ok) { router.push("/") }
         
     }
 

@@ -3,6 +3,7 @@ import { ReactEventHandler, useState } from "react"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function SignUpPage() {
 
@@ -12,6 +13,8 @@ export default function SignUpPage() {
     const [error, setError] = useState('')
     const [repeatError, setRepeatError] = useState('')
     const [emailError, setEmailError] = useState('')
+
+    const router = useRouter()
 
     async function handleSignUp() {
         
@@ -26,7 +29,6 @@ export default function SignUpPage() {
 
         if (emailErr != '' || passwordErr != '' || password != repeatPassword) return
         
-
         const response = await fetch(
             '/api/sign_up',
             {
@@ -43,7 +45,9 @@ export default function SignUpPage() {
         console.log("status:", response.status)
         console.log("ok:", response.ok)
         console.log("data:", data)
-            
+        
+        if(response.ok) { router.push("/") }
+
     }
 
     return (

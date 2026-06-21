@@ -11,6 +11,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('')
+    const [apiError, setApiError] = useState('')
 
     const router = useRouter()
 
@@ -41,7 +42,7 @@ export default function LoginPage() {
         console.log("ok:", response.ok)
         console.log("data:", data)
         
-        if (response.ok) { router.push("/") }
+        if (response.ok) { router.push("/") } else {setApiError(data.error)}
         
     }
 
@@ -65,16 +66,11 @@ export default function LoginPage() {
 
         <p> New here? <Link className='drop-shadow-[0_0_10px_#60a5fa] text-blue-300 underline' href={"/sign_up"}> Sign up </Link> </p>
 
-        {emailError &&
-        <p className="text-white drop-shadow-[0_0_10px_white]" >
-            {emailError}
-        </p>}
+        { emailError && <p className="text-white drop-shadow-[0_0_10px_white]" > {emailError} </p> }
 
-        {passwordError && 
-        <p className="text-white drop-shadow-[0_0_10px_white]">
-            {passwordError}
-        </p>
-        }
+        { passwordError && <p className="text-white drop-shadow-[0_0_10px_white]"> {passwordError} </p> }
+
+        { apiError && <p className="text-white drop-shadow-[0_0_10px_white]"> {apiError} </p> }
 
         <Button onClick={handleSignIn} > Sign in </Button>
             

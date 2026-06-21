@@ -15,10 +15,10 @@ export async function POST(request: Request){
     })
 
     if (existingUser === null) {return Response.json({ error: "Invalid credentials." }, { status: 401 } )}
-    if (password != existingUser.password) { return Response.json({ error: "Invalid credentials"}, { status: 401 } )}
+    if (password != existingUser.password) { return Response.json({ error: "Invalid credentials."}, { status: 401 } )}
     
     const { password: _, ...userWithoutPassword } = existingUser
 
-    return Response.json(userWithoutPassword )
+    return Response.json(userWithoutPassword)
 
 }

@@ -13,6 +13,7 @@ export default function SignUpPage() {
     const [error, setError] = useState('')
     const [repeatError, setRepeatError] = useState('')
     const [emailError, setEmailError] = useState('')
+    const [apiError, setApiError] = useState('')
 
     const router = useRouter()
 
@@ -46,7 +47,7 @@ export default function SignUpPage() {
         console.log("ok:", response.ok)
         console.log("data:", data)
         
-        if(response.ok) { router.push("/") }
+        if (response.ok) { router.push("/sign_in") } else {setApiError(data.error)}
 
     }
 
@@ -72,12 +73,13 @@ export default function SignUpPage() {
 
         <p> Already have an account? <Link className='text-blue-300 underline drop-shadow-[0_0_10px_#60a5fa] ' href={"/sign_in"}> Sign in </Link> </p>
 
-        {repeatError && <p className='text-white drop-shadow-[0_0_10px_white] '> {repeatError} </p>}
+        { repeatError && <p className='text-white drop-shadow-[0_0_10px_white] '> {repeatError} </p> }
 
-        {emailError && <p className='text-white drop-shadow-[0_0_10px_white]' > {emailError} </p> }
+        { emailError && <p className='text-white drop-shadow-[0_0_10px_white]' > {emailError} </p> }
 
-        {error && <p className='text-white drop-shadow-[0_0_10px_white] '> {error} </p> }
+        { error && <p className='text-white drop-shadow-[0_0_10px_white] '> {error} </p> }
 
+        { apiError && <p className='text-white drop-shadow-[0_0_10px_white] '> {apiError} </p> }
 
         <Button onClick={handleSignUp}> Sign up </Button>
 

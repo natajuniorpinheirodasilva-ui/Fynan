@@ -7,16 +7,16 @@ const prisma = new PrismaClient({ adapter })
 export async function POST(request: Request){
     const body = await request.json()
     const {email, password, repeatPassword} = body
-    if (email.length === 0) { return Response.json({ error: "Empty e-mail." }, { status: 401 } )}
-    if (password.length === 0) { return Response.json ({ error: "Empty password." }, { status: 401 } )}
-    if (repeatPassword.length === 0) { return Response.json ({ error: "Empty repeat password" }, { status: 401 } )}
-    if (password != repeatPassword) { return Response.json({ error: "Passwords do not match" }, { status: 401 } )}
+    if (email.length === 0) { return Response.json({ error: "Invalid credentials." }, { status: 401 } )}
+    if (password.length === 0) { return Response.json ({ error: "Invalid credentials." }, { status: 401 } )}
+    if (repeatPassword.length === 0) { return Response.json ({ error: "Invalid credentials." }, { status: 401 } )}
+    if (password != repeatPassword) { return Response.json({ error: "Invalid credentials." }, { status: 401 } )}
 
     const existingUser = await prisma.user.findUnique({
         where: {email}
     })
     
-    if (existingUser != null) { return Response.json({ error: "Invalid credentials" }, { status: 401 } )}
+    if (existingUser != null) { return Response.json({ error: "User already exists." }, { status: 401 } )}
 
     const createdUser = await prisma.user.create({
         data: {email, password}

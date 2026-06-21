@@ -1,95 +1,131 @@
 # Next Project
 
-Projeto de estudo em **Next.js** com foco em autenticação (cadastro e login), construído do zero como prática de fullstack com TypeScript, Prisma e SQLite.
+A full-stack authentication system built with Next.js, used as a learning project to practice frontend/backend integration, database modeling, and API security fundamentals.
 
-## Status atual
+## Overview
 
-- ✅ Páginas de **Sign up** e **Sign in** com validação no frontend
-- ✅ API de cadastro (`/api/sign_up`) integrada ao banco via Prisma
-  - Validação de campos vazios
-  - Verificação de senhas coincidentes
-  - Verificação de e-mail duplicado
-  - Senha removida da resposta da API
-- 🚧 API de login (`/api/sign_in`) — ainda não integrada ao banco
-- 🚧 Exibição de erros do backend na tela (atualmente só aparece no console)
-- 🚧 Dashboard pós-login — não implementado ainda
+The project implements user registration and login with validation on both the client and server, persisted to a SQLite database through Prisma ORM. On successful authentication, the user is redirected to the home page.
 
-## Stack
+## Tech Stack
 
-- [Next.js 16](https://nextjs.org/) (App Router)
-- React 19 + TypeScript
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
 - Tailwind CSS 4
-- [Prisma ORM 7](https://www.prisma.io/) com driver adapter (`@prisma/adapter-better-sqlite3`)
-- SQLite (banco local, arquivo `dev.db`)
+- Prisma ORM 7 (with `@prisma/adapter-better-sqlite3` driver adapter)
+- SQLite
 
-## Como rodar localmente
+## Features
 
-### 1. Clonar o repositório
+### Sign Up (`/sign_up`)
+- Client-side validation: empty fields, password confirmation match
+- Server-side validation (independent of the client):
+  - Empty email, password, or repeat password
+  - Password and repeat password mismatch
+  - Duplicate email check via `findUnique`
+- Returns `401` with a descriptive error message on validation failure
+- Returns the created user without the password field on success
+- Redirects to `/` on success
 
-```bash
-git clone https://github.com/natajuniorpinheirodasilva-ui/Next-Project.git
-cd Next-Project
-```
+### Sign In (`/sign_in`)
+- Client-side validation: empty fields
+- Server-side validation:
+  - Empty email or password
+  - User lookup by email
+  - Password comparison
+  - All failure cases return a generic `"Invalid credentials"` message with status `401`, to avoid leaking whether the email exists in the database
+- Returns the authenticated user without the password field on success
+- Redirects to `/` on success
 
-### 2. Instalar as dependências
+### Known limitations
+- Passwords are stored in plain text. Hashing (e.g. with `bcrypt`) has not been implemented yet.
+- There is no session or token-based authentication. The home page is not protected and does not require a valid session to access.
+- SQLite is used as a local development database. It is not suitable for serverless deployment targets (e.g. Vercel) without an external persistent database, since the filesystem is ephemeral in that environment.
 
-```bash
-npm install
-```
-
-### 3. Configurar as variáveis de ambiente
-
-Copie o arquivo de exemplo:
-
-```bash
-cp .env.example .env
-```
-
-O valor padrão já funciona para rodar localmente com SQLite, não é necessário alterar nada.
-
-### 4. Gerar o Prisma Client
-
-```bash
-npx prisma generate
-```
-
-### 5. Criar o banco de dados local
-
-```bash
-npx prisma migrate dev
-```
-
-Isso cria o arquivo `dev.db` com a tabela `User` já estruturada. O banco local começa **vazio** — você vai precisar se cadastrar pela tela de Sign up antes de testar o login.
-
-### 6. Rodar o projeto
-
-```bash
-npm run dev
-```
-
-Acesse [http://localhost:3000](http://localhost:3000).
-
-## Estrutura do projeto
+## Project Structure
 
 ```
 src/
   app/
-    page.tsx              # Home
-    sign_in/page.tsx      # Tela de login
-    sign_up/page.tsx      # Tela de cadastro
+    page.tsx                  # Home page
+    sign_in/page.tsx          # Sign in form
+    sign_up/page.tsx          # Sign up form
     api/
-      sign_in/route.ts    # API de login (em construção)
-      sign_up/route.ts    # API de cadastro
+      sign_in/route.ts        # Sign in endpoint
+      sign_up/route.ts        # Sign up endpoint
   components/
-    Input.tsx             # Input reutilizável
-    Button.tsx             # Botão reutilizável
+    Input.tsx                 # Reusable input field
+    Button.tsx                # Reusable button
 prisma/
-  schema.prisma           # Definição do model User
+  schema.prisma                # User model definition
+prisma.config.ts               # Prisma 7 configuration (datasource URL)
 ```
 
-## Notas de segurança (projeto em aprendizado)
+## Database Schema
 
-Este projeto está em fase de aprendizado, então alguns pontos ainda **não** seguem práticas de produção:
+```prisma
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+```
 
-- As senhas são salvas **em texto puro** no banco (sem hash). Isso será corrigido com `bcrypt` em uma próxima etapa.
-- Não há autenticação por sessão/token ainda — o login apenas valida credenciais.
+## Getting Started
+
+### Prerequisites
+- Node.js (LTS recommended)
+- npm
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/natajuniorpinheirodasilva-ui/Next-Project.git
+   cd Next-Project
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create the environment file:
+   ```bash
+   cp .env.example .env
+   ```
+   The default value works out of the box for local SQLite usage.
+
+4. Generate the Prisma Client:
+   ```bash
+   npx prisma generate
+   ```
+
+5. Run database migrations:
+   ```bash
+   npx prisma migrate dev
+   ```
+   This creates `dev.db` with the `User` table. The database starts empty; an account must be created via the sign up page before testing sign in.
+
+6. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:3000`.
+
+### Build
+
+The build script runs `prisma generate` before `next build`, so the Prisma Client is always regenerated in fresh environments (e.g. CI/CD, Vercel) where the generated client is not committed to version control:
+
+```bash
+npm run build
+```
+
+## Roadmap
+
+- [ ] Display server-side validation errors in the UI
+- [ ] Hash passwords before storing them
+- [ ] Add session/token-based authentication
+- [ ] Protect the home page behind authentication
+- [ ] Build out the dashboard

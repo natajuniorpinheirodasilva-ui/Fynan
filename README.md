@@ -1,6 +1,6 @@
 # Next Project
 
-A full-stack built with Next.js, used as a learning project to practice frontend/backend integration, database modeling, and API security fundamentals./
+A full-stack authentication system built with Next.js, used as a learning project to practice frontend/backend integration, database modeling, and API security fundamentals.
 
 ## Overview
 

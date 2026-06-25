@@ -1,9 +1,15 @@
-import Link from "next/link"
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3"
 import { PrismaClient } from "@/generated/prisma/client";
-import LogoutButton from "@/components/LogoutButton";
+import Navbar from "@/components/Navbar";
+
+type Transaction = {
+  description: string
+  value: number
+  type: "income" | "expense"
+  category: string
+}
 
 export default async function Home(){
 
@@ -25,21 +31,11 @@ export default async function Home(){
   if (!user) {redirect("/sign_in")}
 
   return (
-    <div> 
-
-      <nav className="p-4 text-4xl font-bold flex justify-between items-center" > 
-        <div>Fynan</div> 
-        <div className="flex gap-4">
-          <span>{user.email}</span>
-          <LogoutButton> Logout </LogoutButton>
-        </div>
-      </nav>
-
-      <div className="bg-blue-500 items-center text-center text-red-200 min-h-screen p-8 text-4x1 font-bold">
-        <h1>Dashboard de Usuários</h1>
-        <Link href="/sign_in" > Ir para login </Link>
+    <div>
+      <Navbar user={{ email: user.email }}/>
+      <div className="items-center text-center text-red-200 min-h-screen p-8 text-4x1 font-bold">
+      <h1>Dashboard de Usuários</h1>
       </div>
-
     </div>
 
   )

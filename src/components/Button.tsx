@@ -9,7 +9,7 @@ const Button = ({ children, onClick }: Props) => {
     return(
     <button 
     onClick={onClick}
-    className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer rounded-lg hover:bg-black
+    className="bg-blue-500 text-white px-4 py-2 cursor-pointer rounded-lg hover:bg-black
     transition-colors duration-500 "> {children} </button>
 )}
 

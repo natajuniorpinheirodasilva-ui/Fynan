@@ -8,8 +8,16 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String        @unique
+  id          Int         @id @default(autoincrement())
+  email       String          @unique
   password    String
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime          @default(now())
+  session     Session[]
+}
+
+model Session {
+  id          String       @id @default(cuid())
+  userId      Int
+  user        User          @relation(fields: [userId], references: [id])
+  expiresAt   DateTime
 }

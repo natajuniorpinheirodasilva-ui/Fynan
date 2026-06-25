@@ -27,7 +27,6 @@ export default function SignUpPage() {
         setEmailError(emailErr)
         setError(passwordErr)
 
-
         if (emailErr != '' || passwordErr != '' || password != repeatPassword) return
         
         const response = await fetch(

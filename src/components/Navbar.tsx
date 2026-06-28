@@ -1,6 +1,5 @@
 'use client'
 import LogoutButton from './LogoutButton'
-import { redirect } from 'next/dist/server/api-utils'
 import { useRouter } from "next/navigation"
 
 

@@ -5,7 +5,7 @@ import Button from "@/components/Button"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-export default function LoginPage() {
+export default function SignInPage() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -66,7 +66,7 @@ export default function LoginPage() {
 
         <p> New here? <Link className='drop-shadow-[0_0_10px_#60a5fa] text-blue-300 underline' href={"/sign_up"}> Sign up </Link> </p>
 
-        { emailError && <p className="text-white drop-shadow-[0_0_10px_white]" > {emailError} </p> }
+        { emailError && <p className="text-white drop-shadow-[0_0_10px_white]"> {emailError} </p> }
 
         { passwordError && <p className="text-white drop-shadow-[0_0_10px_white]"> {passwordError} </p> }
 

@@ -1,10 +1,6 @@
-# Next Project
+# Fynan
 
-A full-stack authentication system built with Next.js, used as a learning project to practice frontend/backend integration, database modeling, and API security fundamentals.
-
-## Overview
-
-The project implements user registration and login with validation on both the client and server, persisted to a SQLite database through Prisma ORM. On successful authentication, the user is redirected to the home page.
+A personal finance web app built with Next.js as a full-stack learning project. Covers authentication, session management, protected routing, and an expense tracker (in progress).
 
 ## Tech Stack
 
@@ -12,73 +8,91 @@ The project implements user registration and login with validation on both the c
 - React 19
 - TypeScript
 - Tailwind CSS 4
-- Prisma ORM 7 (with `@prisma/adapter-better-sqlite3` driver adapter)
+- Prisma ORM 7 with `@prisma/adapter-better-sqlite3`
 - SQLite
 
 ## Features
 
-### Sign Up (`/sign_up`)
-- Client-side validation: empty fields, password confirmation match
-- Server-side validation (independent of the client):
-  - Empty email, password, or repeat password
-  - Password and repeat password mismatch
-  - Duplicate email check via `findUnique`
-- Returns `401` with a descriptive error message on validation failure
-- Returns the created user without the password field on success
-- Redirects to `/` on success
+### Authentication
+- Sign up with email and password
+- Client-side and server-side validation (independent layers)
+- Passwords checked for match and empty fields before hitting the database
+- Duplicate email detection
+- All error responses use generic messages to avoid user enumeration
 
-### Sign In (`/sign_in`)
-- Client-side validation: empty fields
-- Server-side validation:
-  - Empty email or password
-  - User lookup by email
-  - Password comparison
-  - All failure cases return a generic `"Invalid credentials"` message with status `401`, to avoid leaking whether the email exists in the database
-- Returns the authenticated user without the password field on success
-- Redirects to `/` on success
+### Session Management
+- Cookie-based sessions stored in the database (`httpOnly` cookie)
+- Sessions created on login, deleted on logout
+- Session validated on every protected page load
+- Expired or tampered cookies redirect to sign in
 
-### Known limitations
-- Passwords are stored in plain text. Hashing (e.g. with `bcrypt`) has not been implemented yet.
-- There is no session or token-based authentication. The home page is not protected and does not require a valid session to access.
-- SQLite is used as a local development database. It is not suitable for serverless deployment targets (e.g. Vercel) without an external persistent database, since the filesystem is ephemeral in that environment.
+### Protected Routes
+- Route group `(protected)` with a shared layout that handles session verification
+- Any unauthenticated access redirects to `/sign_in` automatically
+- No repeated auth logic across pages
+
+### Expense Tracker (in progress)
+- Transaction form with description, value, category, and income/expense toggle
+- Client-side state management with `useState`
+- Form resets after submission
+- Transaction list rendering (in progress)
+- Summary cards and charts (planned)
+
+### UI
+- Dark mode dashboard aesthetic
+- Glassmorphism navbar (fixed, with user email and sign out)
+- Reusable components: `Button`, `Input`, `Navbar`, `LogoutButton`, `TransactionForm`, `Transactions`
 
 ## Project Structure
 
 ```
 src/
   app/
-    page.tsx                  # Home page
+    (protected)/
+      layout.tsx              # Session verification + Navbar for all protected pages
+      page.tsx                # Home / dashboard
+      new_transaction/
+        page.tsx              # New transaction page (currently unused)
+    api/
+      sign_in/route.ts        # Login endpoint
+      sign_up/route.ts        # Register endpoint
+      logout/route.ts         # Logout endpoint
     sign_in/page.tsx          # Sign in form
     sign_up/page.tsx          # Sign up form
-    api/
-      sign_in/route.ts        # Sign in endpoint
-      sign_up/route.ts        # Sign up endpoint
   components/
-    Input.tsx                 # Reusable input field
-    Button.tsx                # Reusable button
+    Button.tsx
+    Input.tsx
+    Navbar.tsx
+    LogoutButton.tsx
+    TransactionForm.tsx
+    Transactions.tsx
+  lib/
+    types.ts                  # Shared TypeScript types (Transaction)
 prisma/
-  schema.prisma                # User model definition
-prisma.config.ts               # Prisma 7 configuration (datasource URL)
+  schema.prisma               # User and Session models
+prisma.config.ts              # Prisma 7 datasource configuration
 ```
 
 ## Database Schema
 
 ```prisma
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  session   Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
 }
 ```
 
 ## Getting Started
-
-### Prerequisites
-- Node.js (LTS recommended)
-- npm
-
-### Setup
 
 1. Clone the repository:
    ```bash
@@ -95,7 +109,6 @@ model User {
    ```bash
    cp .env.example .env
    ```
-   The default value works out of the box for local SQLite usage.
 
 4. Generate the Prisma Client:
    ```bash
@@ -106,26 +119,25 @@ model User {
    ```bash
    npx prisma migrate dev
    ```
-   This creates `dev.db` with the `User` table. The database starts empty; an account must be created via the sign up page before testing sign in.
 
 6. Start the development server:
    ```bash
    npm run dev
    ```
-   The application will be available at `http://localhost:3000`.
 
-### Build
+The app will be available at `http://localhost:3000`. The database starts empty — create an account via the sign up page before testing sign in.
 
-The build script runs `prisma generate` before `next build`, so the Prisma Client is always regenerated in fresh environments (e.g. CI/CD, Vercel) where the generated client is not committed to version control:
+## Known Limitations
 
-```bash
-npm run build
-```
+- Passwords are stored in plain text. Hashing (e.g. bcrypt) has not been implemented yet.
+- Session expiry is stored in the database but not yet enforced on validation.
+- SQLite is not suitable for serverless deployments (e.g. Vercel) without an external persistent database.
 
 ## Roadmap
 
-- [ ] Display server-side validation errors in the UI
-- [ ] Hash passwords before storing them
-- [ ] Add session/token-based authentication
-- [ ] Protect the home page behind authentication
-- [ ] Build out the dashboard
+- [ ] Hash passwords with bcrypt
+- [ ] Enforce session expiry on validation
+- [ ] Transaction list UI
+- [ ] Summary cards (total income, total expense, balance)
+- [ ] Charts with Recharts
+- [ ] Migrate to PostgreSQL for production

@@ -16,8 +16,6 @@ const Navbar = ({ user }: Props) => {
         <p className='text-4xl cursor-pointer' onClick={() => {router.push("/")} } >Fynan</p> 
         <div className="flex gap-4 items-center">
         <span> {user.email} </span>
-        <button className='bg-blue-950 text-white px-4 py-2 cursor-pointer rounded-lg hover:bg-yellow-600
-        transition-colors duration-500 hover:text-black' onClick={() => {router.push("/new_transaction")} } > New Transaction </button>
         <LogoutButton> Logout </LogoutButton>
         </div>
       </nav>

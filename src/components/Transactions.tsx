@@ -11,8 +11,8 @@ const Transactions = () => {
     
     return (
         <div>
-            <p> { JSON.stringify(transactionState) } </p>
             <TransactionForm onAdd={handleAdd} />
+            <p> { JSON.stringify(transactionState) } </p>
         </div>
     )
 }

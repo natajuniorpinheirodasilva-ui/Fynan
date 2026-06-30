@@ -1,7 +1,8 @@
 import React from 'react'
 
 type Props = {
-    children: React.ReactNode;
+    type?: string
+    children?: React.ReactNode;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 

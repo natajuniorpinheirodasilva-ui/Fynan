@@ -1,9 +1,9 @@
-import TransactionForm from "@/components/TransactionForm"
+import Transactions from "@/components/Transactions"
 
 export default function () {
   return (
-    <div className="items-center text-center text-red-200 min-h-screen p-8 text-4x1 font-bold" >
-      <TransactionForm></TransactionForm>
+    <div className="my-24 flex items-center justify-center bg-background px-4" >
+      <Transactions/>
     </div>
   )
 }

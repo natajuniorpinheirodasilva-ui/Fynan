@@ -3,7 +3,7 @@ import React from 'react'
 type Props = {
   type: string;
   placeholder: string;
-  value?: string;
+  value?: string | number
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -11,10 +11,10 @@ const Input = ({ type, placeholder, value, onChange }: Props) => {
   return (
 
     <input
-    type={type}
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
+    type={ type }
+    placeholder={ placeholder }
+    value={ value }
+    onChange={ onChange }
     className="
     border p-2 rounded-lg w-80 h-13 focus:bg-blue-500/8
     focus:transition-colors duration-500 backdrop-blur-md bg-gray/5

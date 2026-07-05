@@ -10,9 +10,13 @@ type Props = {
 const TransactionForm = ({ onAdd }: Props ) => {
 
     const [description, setDescription] = useState<string>('')
-    const [value, setValue] = useState<number>(0)
+    const [descriptionError, setDescriptionError] = useState<boolean>(false)
+    const [value, setValue] = useState<string>('')
+    const [valueError ,setValueError] = useState<boolean>(false)
     const [type, setType] = useState<"income" | "expense" | undefined>(undefined)
+    const [typeError, setTypeError] = useState<boolean>(false)
     const [category, setCategory] = useState<string>('')
+    const [categoryError, setCategoryError] = useState<boolean>(false)
     const [date, setDate] = useState<Date>(new Date())
 
     const formatDateForInput = (dateObject: Date): string => {
@@ -28,8 +32,22 @@ const TransactionForm = ({ onAdd }: Props ) => {
     
     function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault()
-      if (type === undefined ) {return alert('Invalid type')}
-      if (value === 0) {return alert('Value must be greater than 0')}
+      const numericValue = parseFloat(value) || 0
+      
+      const hasDescriptionError = description === ""
+      const hasValueError = numericValue <= 0
+      const hasCategoryError = category === ""
+      const hasTypeError = type === undefined
+
+      setDescriptionError(hasDescriptionError)
+      setValueError(hasValueError)
+      setCategoryError(hasCategoryError)
+      setTypeError(hasTypeError)
+
+      if (hasDescriptionError || hasValueError || hasCategoryError|| hasTypeError) {
+        return
+      }
+
       const newTransaction: Transaction = {
         description,
         value,
@@ -39,7 +57,7 @@ const TransactionForm = ({ onAdd }: Props ) => {
       }
       onAdd(newTransaction)
       setDescription('')
-      setValue(0)
+      setValue('')
       setType(undefined)
       setCategory('')
       setDate(new Date())
@@ -62,7 +80,7 @@ const TransactionForm = ({ onAdd }: Props ) => {
         type="number"
         placeholder="Enter value"
         value={value}
-        onChange={(e) => setValue(parseInt(e.target.value))}/>
+        onChange={(e) => setValue(e.target.value)}/>
 
         <Input
         type="text"
@@ -75,7 +93,7 @@ const TransactionForm = ({ onAdd }: Props ) => {
         placeholder='Select date'
         value={formatDateForInput(date)}
         onChange={handleDateChange}/>
-        
+
       </div>
 
       <div className="flex gap-2 justify-center mt-6">
@@ -98,6 +116,11 @@ const TransactionForm = ({ onAdd }: Props ) => {
         className="w-full mt-6 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition-colors cursor-pointer">
         Add Transaction
       </button>
+      
+      { descriptionError && <p> Invalid Description </p> }
+      { valueError && <p> Invalid Value </p> }
+      { categoryError && <p> Invalid Category </p> }
+      { typeError && <p> Invalid Type </p> }
 
     </form>
   )

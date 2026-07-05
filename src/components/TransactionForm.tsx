@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { HTMLAttributes, useEffect, useState } from 'react'
 import Input from "@/components/Input"
 import { Transaction } from "@/lib/types" 
 
@@ -13,7 +13,19 @@ const TransactionForm = ({ onAdd }: Props ) => {
     const [value, setValue] = useState<number>(0)
     const [type, setType] = useState<"income" | "expense" | undefined>(undefined)
     const [category, setCategory] = useState<string>('')
+    const [date, setDate] = useState<Date>(new Date())
 
+    const formatDateForInput = (dateObject: Date): string => {
+      return dateObject.toISOString().split(`T`)[0]
+    }
+
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const dateString = e.target.value
+      if(dateString) {
+        setDate(new Date(`${dateString}T00:00:00`))
+      }
+    }
+    
     function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault()
       if (type === undefined ) {return alert('Invalid type')}
@@ -22,13 +34,15 @@ const TransactionForm = ({ onAdd }: Props ) => {
         description,
         value,
         type,
-        category
+        category,
+        date
       }
       onAdd(newTransaction)
       setDescription('')
       setValue(0)
       setType(undefined)
       setCategory('')
+      setDate(new Date())
     }
 
     return (
@@ -38,9 +52,30 @@ const TransactionForm = ({ onAdd }: Props ) => {
       <h1 className="text-xl font-semibold text-white mb-6">New Transaction</h1>
       
       <div className="flex flex-col items-center gap-4">
-        <Input type="text" placeholder="Enter description" value={description} onChange={(e) => setDescription(e.target.value)}/>
-        <Input type="number" placeholder="Enter value" value={value} onChange={(e) => setValue(parseInt(e.target.value))}/>
-        <Input type="text" placeholder="Enter category" value={category} onChange={(e) => setCategory(e.target.value)}/>
+        <Input
+        type="text"
+        placeholder="Enter description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}/>
+
+        <Input
+        type="number"
+        placeholder="Enter value"
+        value={value}
+        onChange={(e) => setValue(parseInt(e.target.value))}/>
+
+        <Input
+        type="text"
+        placeholder="Enter category"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}/>
+
+        <Input
+        type='date'
+        placeholder='Select date'
+        value={formatDateForInput(date)}
+        onChange={handleDateChange}/>
+        
       </div>
 
       <div className="flex gap-2 justify-center mt-6">

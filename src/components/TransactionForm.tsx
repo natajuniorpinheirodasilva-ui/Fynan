@@ -50,7 +50,7 @@ const TransactionForm = ({ onAdd }: Props ) => {
 
       const newTransaction: Transaction = {
         description,
-        value,
+        value: numericValue,
         type,
         category,
         date

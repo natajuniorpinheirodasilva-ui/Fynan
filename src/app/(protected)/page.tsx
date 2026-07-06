@@ -1,4 +1,5 @@
 import Transactions from "@/components/Transactions"
+import { groupByCategory, groupByMonth } from "@/lib/aggregations"
 
 export default async function Home(){
   return (

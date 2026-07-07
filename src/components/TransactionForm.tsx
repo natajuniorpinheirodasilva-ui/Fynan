@@ -1,5 +1,5 @@
 'use client'
-import { HTMLAttributes, useEffect, useState } from 'react'
+import { useState } from 'react'
 import Input from "@/components/Input"
 import { Transaction } from "@/lib/types" 
 

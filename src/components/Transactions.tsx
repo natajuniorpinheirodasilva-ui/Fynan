@@ -12,7 +12,6 @@ const Transactions = (props: Props) => {
     return (
         <div>
             <TransactionForm onAdd={props.onAdd} />
-            <p> { JSON.stringify(props.transactions) } </p>
         </div>
     )
 }

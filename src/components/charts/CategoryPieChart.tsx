@@ -10,7 +10,7 @@ const COLORS = ['#60a5fa', '#f87171', '#34d399', '#fbbf24', '#a78bfa', '#f472b6'
 
 const CategoryPieChart = (props: Props ) => {
   
-  const renderShape = (sectorProps: PieSectorDataItem) => {
+  const renderShape = (sectorProps: PieSectorDataItem & { index?: number }) => {
     const index = sectorProps.index ?? 0
     return <Sector {...sectorProps} fill={COLORS[index % COLORS.length]}/>
   }

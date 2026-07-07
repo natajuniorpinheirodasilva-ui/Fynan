@@ -1,26 +1,33 @@
 'use client'
 
-import { PieChart, Pie, ResponsiveContainer } from "recharts"
+import { PieChart, Pie, ResponsiveContainer, Sector, Tooltip } from "recharts"
+import { PieSectorDataItem } from "recharts/types/polar/Pie"
 
 type Props = {
   data: { category: string, total: number }[]}
 
+const COLORS = ['#60a5fa', '#f87171', '#34d399', '#fbbf24', '#a78bfa', '#f472b6']
+
 const CategoryPieChart = (props: Props ) => {
+  
+  const renderShape = (sectorProps: PieSectorDataItem) => {
+    const index = sectorProps.index ?? 0
+    return <Sector {...sectorProps} fill={COLORS[index % COLORS.length]}/>
+  }
+  
   return (
     <ResponsiveContainer width='100%' height={300}> 
-
-    <PieChart>
-      
-      <Pie
-      data={props.data}
-      dataKey='total'
-      nameKey='category'>
-      </Pie>
-  
-    </PieChart>
-
+      <PieChart>
+        <Pie
+          data={props.data}
+          dataKey='total'
+          nameKey='category'
+          shape={renderShape}
+          >
+        </Pie>
+        <Tooltip/>
+      </PieChart>
     </ResponsiveContainer>
-
   )
 }
 

@@ -1,18 +1,18 @@
 'use client'
 import TransactionForm from "./TransactionForm"
 import { Transaction } from "@/lib/types"
-import { useState } from "react"
 
-const Transactions = () => {
-    
-    const [transactionState, setTransactionState] = useState<Transaction[]>([])
-    
-    function handleAdd (newTransaction: Transaction) { setTransactionState([ newTransaction, ...transactionState ]) }
-    
+type Props = {
+    transactions: Transaction[],
+    onAdd: (transaction: Transaction) => void
+}
+
+const Transactions = (props: Props) => {
+        
     return (
         <div>
-            <TransactionForm onAdd={handleAdd} />
-            <p> { JSON.stringify(transactionState) } </p>
+            <TransactionForm onAdd={props.onAdd} />
+            <p> { JSON.stringify(props.transactions) } </p>
         </div>
     )
 }

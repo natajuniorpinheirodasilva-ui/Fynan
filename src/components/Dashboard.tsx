@@ -4,6 +4,7 @@ import { Transaction } from "@/lib/types"
 import { groupByCategory, groupByMonth } from "@/lib/aggregations"
 import Transactions from "./Transactions"
 import CategoryPieChart from "./charts/CategoryPieChart"
+import MonthlyBarChart from "./charts/MonthlyBarChart"
 
 const Dashboard = () => {
     const [transactionState, setTransactionState] = useState<Transaction[]>([])
@@ -17,6 +18,7 @@ const Dashboard = () => {
         <div>
             <Transactions onAdd={handleAdd} transactions={transactionState}/>
             <CategoryPieChart data={cachedCategoryValue}/>
+            <MonthlyBarChart data={cachedMonthlyValue}/>
         </div>
     )
 }

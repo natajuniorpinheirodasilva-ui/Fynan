@@ -16,18 +16,21 @@ const CategoryPieChart = (props: Props ) => {
   }
   
   return (
-    <ResponsiveContainer width='100%' height={300}> 
-      <PieChart>
-        <Pie
-          data={props.data}
-          dataKey='total'
-          nameKey='category'
-          shape={renderShape}
-          >
-        </Pie>
-        <Tooltip/>
-      </PieChart>
-    </ResponsiveContainer>
+    <div>
+      <h1 className="py-3.5 text-2xl" > Category Chart </h1>
+      <ResponsiveContainer width='100%' height={300}> 
+        <PieChart>
+          <Pie
+            data={props.data}
+            dataKey='total'
+            nameKey='category'
+            shape={renderShape}
+            >
+          </Pie>
+          <Tooltip/>
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
   )
 }
 

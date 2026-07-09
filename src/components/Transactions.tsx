@@ -11,7 +11,7 @@ const Transactions = (props: Props) => {
         
     return (
         <div>
-            <TransactionForm onAdd={props.onAdd} />
+            <TransactionForm onAdd={props.onAdd}/>
         </div>
     )
 }

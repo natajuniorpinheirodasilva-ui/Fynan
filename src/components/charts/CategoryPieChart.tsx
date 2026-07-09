@@ -17,7 +17,7 @@ const CategoryPieChart = (props: Props ) => {
   
   return (
     <div>
-      <h1 className="py-3.5 text-2xl" > Category Chart </h1>
+      <h1 className="py-3.5 text-2xl px-10 mx-10" > Category Chart </h1>
       <ResponsiveContainer width='100%' height={300}> 
         <PieChart>
           <Pie

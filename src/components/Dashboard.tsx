@@ -15,10 +15,12 @@ const Dashboard = () => {
     const cachedMonthlyValue = useMemo(() => groupByMonth(transactionState), [transactionState] )
 
     return (
-        <div>
+        <div className="flex flex-col items-center " >
             <Transactions onAdd={handleAdd} transactions={transactionState}/>
-            <CategoryPieChart data={cachedCategoryValue}/>
-            <MonthlyBarChart data={cachedMonthlyValue}/>
+            <div className="flex gap-8">
+                <CategoryPieChart data={cachedCategoryValue}/>
+                <MonthlyBarChart data={cachedMonthlyValue}/>
+            </div>
         </div>
     )
 }

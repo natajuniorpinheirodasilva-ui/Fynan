@@ -117,11 +117,12 @@ const TransactionForm = ({ onAdd }: Props ) => {
         Add Transaction
       </button>
       
-      { descriptionError && <p> Invalid Description </p> }
-      { valueError && <p> Invalid Value </p> }
-      { categoryError && <p> Invalid Category </p> }
-      { typeError && <p> Invalid Type </p> }
-
+      <div className='mt-5' >
+        { descriptionError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Description </p> }
+        { valueError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Value </p> }
+        { categoryError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Category </p> }
+        { typeError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Type </p> }
+      </div>
     </form>
   )
 }

@@ -64,20 +64,33 @@ export default function SignUpPage() {
 
         <h1 className='text-4xl font-bold hover:text-blue-500 cursor-default'> Sign up </h1>
 
-        <Input value={email} onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)} } placeholder='Enter your email' type='email'/>
+        <Input
+        value={email}
+        onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)} }
+        type='email'
+        placeholder='Enter your email' />
 
-        <Input value={password} onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)} } type='password' placeholder='Enter your password' />
+        <Input
+        value={password}
+        onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)} }
+        type='password'
+        placeholder='Enter your password' />
         
-        <Input value={repeatPassword} onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {setRepeatPassword(e.target.value)} } type="password" placeholder="Repeat your password"></Input>
+        <Input
+        value={repeatPassword}
+        onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {setRepeatPassword(e.target.value)} }
+        type="password"
+        placeholder="Repeat your password"></Input>
 
-        <p> Already have an account? <Link className='text-blue-300 underline drop-shadow-[0_0_10px_#60a5fa] ' href={"/sign_in"}> Sign in </Link> </p>
+        <p>Already have an account?
+            <Link className='text-blue-300 underline drop-shadow-[0_0_10px_#60a5fa] ' href={"/sign_in"}> 
+                Sign in 
+            </Link>
+        </p>
 
         { repeatError && <p className='text-white drop-shadow-[0_0_10px_white] '> {repeatError} </p> }
-
         { emailError && <p className='text-white drop-shadow-[0_0_10px_white]' > {emailError} </p> }
-
         { error && <p className='text-white drop-shadow-[0_0_10px_white] '> {error} </p> }
-
         { apiError && <p className='text-white drop-shadow-[0_0_10px_white] '> {apiError} </p> }
 
         <Button onClick={handleSignUp}> Sign up </Button>

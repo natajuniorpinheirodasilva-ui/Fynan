@@ -12,6 +12,7 @@ const Transactions = (props: Props) => {
     return (
         <div>
             <TransactionForm onAdd={props.onAdd}/>
+            <hr className="border-t border-white/10 my-6" />
         </div>
     )
 }

@@ -54,17 +54,28 @@ export default function SignInPage() {
             linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
             url('/backgroundImage.jpg')
             `
-        }}
-
-        >
+        }}>
 
         <h1 className='text-4xl font-bold hover:text-blue-500 cursor-default'> Sign in </h1>
-        <Input value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)}} placeholder='Enter your email' type='text'/>
-        <Input value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}} type='password' placeholder='Enter your password' />
-        <p> New here? <Link className='drop-shadow-[0_0_10px_#60a5fa] text-blue-300 underline' href={"/sign_up"}> Sign up </Link> </p>
+        
+        <Input
+        value={email}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEmail(e.target.value)}}
+        placeholder='Enter your email' type='text'/>
+        
+        <Input value={password}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPassword(e.target.value)}}
+        type='password'
+        placeholder='Enter your password' />
+        
+        <p> New here? <Link
+        className='drop-shadow-[0_0_10px_#60a5fa] text-blue-300 underline'
+        href={"/sign_up"}> Sign up </Link> </p>
+
         { emailError && <p className="text-white drop-shadow-[0_0_10px_white]"> {emailError} </p> }
         { passwordError && <p className="text-white drop-shadow-[0_0_10px_white]"> {passwordError} </p> }
         { apiError && <p className="text-white drop-shadow-[0_0_10px_white]"> {apiError} </p> }
+        
         <Button onClick={handleSignIn} > Sign in </Button>
             
         </div>

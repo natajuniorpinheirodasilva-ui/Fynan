@@ -33,11 +33,10 @@ export default async function ProtectedLayout({
     if (!user) {redirect("/sign_in")}
 
     return (
-        <html lang="en" >
-            <div className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`} >
-                <Navbar user={{ email: user.email }} />
-                {children}
-            </div>
-        </html>
+        <div className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`} >
+            <Navbar user={{ email: user.email }} />
+            {children}
+        </div>
+
     )
 }

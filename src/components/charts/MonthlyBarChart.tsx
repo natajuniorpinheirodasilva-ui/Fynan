@@ -8,7 +8,7 @@ type Props = {
 function MonthlyBarChart (props: Props) {
     return (
         <div>
-            <h1 className="py-3.5 text-2xl px-10 mx-10" > Monthly Chart </h1>
+            <h1 className="py-3.5 text-2xl px-10 mx-10" > Monthly Bar </h1>
             <ResponsiveContainer
                 height={300}
                 width='100%'>

@@ -9,7 +9,7 @@ type Props = {
 function MonthlyLineChart(props: Props) {
   return (
     <div>
-      <h1>Monthly Line</h1>
+      <h1 className="py-3.5 text-2xl px-10 mx-10" >Monthly Line</h1>
       <ResponsiveContainer width='100%' height={300}>
         <LineChart
           data={props.data}

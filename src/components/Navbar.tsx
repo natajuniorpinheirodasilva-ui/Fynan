@@ -16,7 +16,7 @@ const Navbar = ({ user }: Props) => {
         <p className='text-4xl cursor-pointer' onClick={() => {router.push("/")} } >Fynan</p> 
         <div className="flex gap-4 items-center">
         <span> {user.email} </span>
-        <LogoutButton> Logout </LogoutButton>
+        <LogoutButton>Logout</LogoutButton>
         </div>
       </nav>
   )

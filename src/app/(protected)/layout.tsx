@@ -3,6 +3,11 @@ import { cookies } from "next/headers";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3"
 import { PrismaClient } from "@/generated/prisma/client";
 import Navbar from "@/components/Navbar";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google"
+
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display", weight: ["500", "700"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-body" })
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 export default async function ProtectedLayout({
   children,
@@ -28,9 +33,11 @@ export default async function ProtectedLayout({
     if (!user) {redirect("/sign_in")}
 
     return (
-        <div>
-            <Navbar user={{ email: user.email }} />
-            {children}
-        </div>
+        <html lang="en" >
+            <div className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`} >
+                <Navbar user={{ email: user.email }} />
+                {children}
+            </div>
+        </html>
     )
 }

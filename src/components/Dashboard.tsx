@@ -14,15 +14,28 @@ const Dashboard = () => {
     const cachedCategoryValue = useMemo(() => groupByCategory(transactionState), [transactionState])
     const cachedMonthlyValue = useMemo(() => groupByMonth(transactionState), [transactionState] )
 
-    return (
-        <div className="flex flex-col items-center" >
-            <Transactions onAdd={handleAdd} transactions={transactionState}/>
-            <div className="flex gap-8">
-                <CategoryPieChart data={cachedCategoryValue}/>
-                <MonthlyBarChart data={cachedMonthlyValue}/>
-            </div>
+return (
+  <div className="flex flex-col items-center gap-16 w-full">
+    <Transactions onAdd={handleAdd} transactions={transactionState}/>
+
+    <div className="w-full max-w-4xl">
+      <div className="flex items-center gap-3 mb-6">
+        <span className="font-mono text-xs tracking-[0.2em] text-cyan-400/70 uppercase">Overview</span>
+        <div className="h-px flex-1 bg-white/10" />
+      </div>
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="w-full md:w-1/2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md p-6">
+          <h2 className="font-display text-sm font-semibold text-white/80 mb-4">By Category</h2>
+          <CategoryPieChart data={cachedCategoryValue}/>
         </div>
-    )
+        <div className="w-full md:w-1/2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md p-6">
+          <h2 className="font-display text-sm font-semibold text-white/80 mb-4">Monthly Flow</h2>
+          <MonthlyBarChart data={cachedMonthlyValue}/>
+        </div>
+      </div>
+    </div>
+  </div>
+)
 }
 
 export default Dashboard

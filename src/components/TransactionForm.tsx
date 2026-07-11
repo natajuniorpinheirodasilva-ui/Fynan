@@ -64,10 +64,10 @@ const TransactionForm = ({ onAdd }: Props ) => {
     }
 
     return (
-    <form className="max-w-md bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm p-8"
+    <form className="max-w-md bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm p-8 glow-card"
     onSubmit={handleSubmit}>
       
-      <h1 className="text-xl font-semibold text-white mb-6">New Transaction</h1>
+      <h1 className="font-display text-xl font-semibold text-white mb-6">New Transaction</h1>
       
       <div className="flex flex-col items-center gap-4">
         <Input
@@ -100,32 +100,32 @@ const TransactionForm = ({ onAdd }: Props ) => {
         <button
           type="button"
           onClick={() => setType("income")}
-          className={`rounded-full px-5 py-1.5 text-sm font-medium transition-colors cursor-pointer ${type === "income" ? "bg-green-500 text-white" : "bg-white/10 text-white/60 hover:bg-white/20"}`}>
+          className={`rounded-full px-5 py-1.5 text-sm font-medium transition-colors cursor-pointer ${type === "income" ? "bg-emerald-500 text-white" : "bg-white/10 text-white/60 hover:bg-white/20"}`}>
           Income
         </button>
         <button
           type="button"
           onClick={() => setType("expense")}
-          className={`rounded-full px-5 py-1.5 text-sm font-medium transition-colors cursor-pointer ${type === "expense" ? "bg-red-500 text-white" : "bg-white/10 text-white/60 hover:bg-white/20"}`}>
+          className={`rounded-full px-5 py-1.5 text-sm font-medium transition-colors cursor-pointer ${type === "expense" ? "bg-rose-500 text-white" : "bg-white/10 text-white/60 hover:bg-white/20"}`}>
           Expense
         </button>
       </div>
 
       <button
         type="submit"
-        className="w-full mt-6 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition-colors cursor-pointer">
+        className="w-full mt-6 py-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-medium transition-colors cursor-pointer">
         Add Transaction
       </button>
       
       <div className='mt-5 mb-5 ' >
-        { descriptionError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Description </p> }
-        { valueError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Value </p> }
-        { categoryError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Category </p> }
-        { typeError && <p className='text-white drop-shadow-[0_0_10px_white]' > Invalid Type </p> }
+        { descriptionError && <p className='text-rose-400 text-sm' > Invalid Description </p> }
+        { valueError && <p className='text-rose-400 text-sm' > Invalid Value </p> }
+        { categoryError && <p className='text-rose-400 text-sm' > Invalid Category </p> }
+        { typeError && <p className='text-rose-400 text-sm' > Invalid Type </p> }
       </div>
-      <hr className='border-t-2 border-white/50 ' />
+      <hr className='border-t-2 border-white/10 ' />
     </form>
-  )
+)
 }
 
 export default TransactionForm

@@ -27,7 +27,10 @@ const CategoryPieChart = (props: Props ) => {
             shape={renderShape}
             >
           </Pie>
-          <Tooltip />
+          <Tooltip
+            labelStyle={{ color: '#ffffff' }}
+            contentStyle={{ backgroundColor: '#141925', border: '2px solid rgba(255, 255, 255, 1)', borderRadius: '8px' }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>

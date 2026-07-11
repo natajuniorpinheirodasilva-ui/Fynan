@@ -19,11 +19,15 @@ function MonthlyBarChart (props: Props) {
                     left: 5,
                     bottom: 5,
                 }}
-                data={props.data}>
+                    data={props.data}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey='month'/>
                     <YAxis width='auto'/>
-                    <Tooltip/>
+                    <Tooltip
+                    cursor={false}
+                    labelStyle={{ color: '#ffffff' }}
+                    contentStyle={{ backgroundColor: '#141925', border: '2px solid rgba(255, 255, 255, 1)', borderRadius: '8px' }}
+                    />
                     <Legend/>
                     <Bar dataKey='income' fill='#34d399' name='Income'/>
                     <Bar dataKey='expense' fill='#f87171'name='Expense' />

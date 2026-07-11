@@ -24,8 +24,7 @@ const LogoutButton = ({ children }: Props) => {
     }
 
     return(
-    <button className="bg-blue-950 text-white px-4 py-2 cursor-pointer rounded-lg hover:bg-yellow-600
-    transition-colors duration-500 hover:text-black" onClick={ handleLogout }> {children} </button>
+    <button className="px-4 py-2 cursor-pointer rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition-colors" onClick={ handleLogout }> {children} </button>
     )}
 
 export default LogoutButton

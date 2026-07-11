@@ -5,6 +5,7 @@ import { groupByCategory, groupByMonth } from "@/lib/aggregations"
 import Transactions from "./Transactions"
 import CategoryPieChart from "./charts/CategoryPieChart"
 import MonthlyBarChart from "./charts/MonthlyBarChart"
+import MonthlyLineChart from "./charts/MonthlyLineChart"
 
 const Dashboard = () => {
     const [transactionState, setTransactionState] = useState<Transaction[]>([])
@@ -31,6 +32,7 @@ return (
         <div className="w-full md:w-1/2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md p-6">
           <h2 className="font-display text-sm font-semibold text-white/80 mb-4">Monthly Flow</h2>
           <MonthlyBarChart data={cachedMonthlyValue}/>
+          <MonthlyLineChart data={cachedMonthlyValue} />
         </div>
       </div>
     </div>

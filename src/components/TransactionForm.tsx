@@ -64,7 +64,7 @@ const TransactionForm = ({ onAdd }: Props ) => {
     }
 
     return (
-    <form className="max-w-md bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm p-8 glow-card"
+    <form className="max-w-md bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm p-8  glow-card "
     onSubmit={handleSubmit}>
       
       <h1 className="font-display text-xl font-semibold text-white mb-6">New Transaction</h1>

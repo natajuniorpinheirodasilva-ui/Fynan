@@ -1,14 +1,14 @@
 import { Transaction } from "./types";
 
-export function groupByCategory (transactions: Transaction[]) {
-    const totals: Record<string, number> = {}
+export function groupByCategory(transactions: Transaction[]) {
+  const totals: Record<string, { total: number; type: "income" | "expense" }> = {}
 
-    for (const t of transactions) {
-        totals[t.category] = (totals[t.category] ?? 0) + t.value
-    }
+  for (const t of transactions) {
+    if (!totals[t.category]) totals[t.category] = { total: 0, type: t.type }
+    totals[t.category].total += t.value
+  }
 
-    return Object.entries(totals).map(([category, total]) => ({ category, total }))
-    
+  return Object.entries(totals).map(([category, { total, type }]) => ({ category, total, type }))
 }
 
 export function groupByMonth (transactions: Transaction[]) {

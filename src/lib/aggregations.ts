@@ -12,19 +12,19 @@ export function groupByCategory(transactions: Transaction[]) {
 }
 
 export function groupByMonth (transactions: Transaction[]) {
-      const totals: Record<string, { income: number; expense: number; sortKey: string }> = {}
+  const totals: Record<string, { income: number; expense: number; sortKey: string }> = {}
 
-      for (const t of transactions) {
-        const sortKey = `${t.date.getFullYear()}-${String(t.date.getMonth() + 1).padStart(2, '0')}`
+  for (const t of transactions) {
+    const sortKey = `${t.date.getFullYear()}-${String(t.date.getMonth() + 1).padStart(2, '0')}`
         
-        if (!totals[sortKey]) totals[sortKey] = { income: 0, expense: 0, sortKey }
-        totals[sortKey][t.type] += t.value 
-      }
+    if (!totals[sortKey]) totals[sortKey] = { income: 0, expense: 0, sortKey }
+    totals[sortKey][t.type] += t.value 
+  }
 
-      return Object.values(totals)
-        .sort( (a, b) => a.sortKey.localeCompare(b.sortKey) )
-        .map(({ sortKey, ...rest }) => ({ month: sortKey, ...rest }) )
-    }
+  return Object.values(totals)
+    .sort( (a, b) => a.sortKey.localeCompare(b.sortKey) )
+    .map(({ sortKey, ...rest }) => ({ month: sortKey, ...rest }) )
+}
 
 export function getBalance(transactions: Transaction[]): number {
   let balance = 0

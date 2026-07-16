@@ -1,7 +1,7 @@
 'use client'
 import { useMemo, useState } from "react"
 import { Transaction } from "@/lib/types"
-import { groupByCategory, groupByMonth } from "@/lib/aggregations"
+import { groupByCategory, groupByMonth, getBalance } from "@/lib/aggregations"
 import Transactions from "./Transactions"
 import CategoryPieChart from "./charts/CategoryPieChart"
 import MonthlyBarChart from "./charts/MonthlyBarChart"
@@ -15,15 +15,16 @@ const Dashboard = () => {
 
     const cachedCategoryValue = useMemo(() => groupByCategory(transactionState), [transactionState])
     const cachedMonthlyValue = useMemo(() => groupByMonth(transactionState), [transactionState] )
+    const cachedBalance = useMemo(() => getBalance(transactionState), [transactionState])
 
 return (
   <div className="flex flex-col items-center gap-16 w-full">
     <Transactions onAdd={handleAdd} transactions={transactionState}/>
-
     <div className="w-full max-w-4xl">
       <div className="flex items-center gap-3 mb-6">
         <span className="font-mono text-xs tracking-[0.2em] text-cyan-400/70 uppercase">Overview</span>
         <div className="h-px flex-1 bg-white/10" />
+        <p className={`font-mono text-2xl font-bold mt-1 ${cachedBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}> $ {cachedBalance.toFixed(2)} </p>
       </div>
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-1/2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md p-6">

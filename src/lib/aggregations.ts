@@ -25,3 +25,17 @@ export function groupByMonth (transactions: Transaction[]) {
         .sort( (a, b) => a.sortKey.localeCompare(b.sortKey) )
         .map(({ sortKey, ...rest }) => ({ month: sortKey, ...rest }) )
     }
+
+export function getBalance(transactions: Transaction[]): number {
+  let balance = 0
+
+  for (const t of transactions) {
+    if (t.type === "income") {
+      balance += t.value
+    } else {
+      balance -= t.value
+    }
+  }
+
+  return balance
+}
